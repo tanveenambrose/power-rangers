@@ -1,2 +1,28 @@
 @import "tailwindcss";
 
+.indicator-line {
+  width: 3px;
+  height: 10px;
+  background-color: #1f2937; /* neutral-800 */
+  margin-left: 2px;
+  margin-right: 2px;
+  border-radius: 2px;
+  opacity: 0.5;
+  animation: bounce 1s infinite;
+  animation-play-state: paused;
+}
+
+.indicator-line.active {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(2);
+  }
+}
+

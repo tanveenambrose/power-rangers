@@ -3,11 +3,28 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Star } from "lucide-react";
 import { SplitText } from "gsap/SplitText";
+import React from "react";
 
 gsap.registerPlugin(SplitText);
 
 function Hero() {
   useGSAP(() => {
+    var main = document.getElementById("hero");
+    var cursor = document.getElementById("cursor");
+
+    main?.addEventListener('mousemove', function(dets) {
+      gsap.to(cursor, {
+        opacity: 1,
+        x: dets.x,
+        y: dets.y,
+        ease: 'power3.out'
+      })
+    });
+    main?.addEventListener('mouseleave', function(dets) {
+      gsap.to(cursor, {
+        opacity: 0,
+      })
+    });
     // 标题拆分动画
     const heroSplit = new SplitText(".title0", {
       type: "chars, words",
@@ -47,8 +64,23 @@ function Hero() {
           scrub: true
         },
       })
-      .to(".icon", { y: 200 }, 0)
-      .to(".icon1", { y: 300 }, 0);
+      .to(".icon", { y: 200, x: -100, rotate: 180 }, 0)
+      .to(".icon1", { y: 300,x: 150, rotate: -180 }, 0);
+
+      gsap.from("#icon",{
+        rotate: 360,
+        duration: 2, 
+        ease:'power3.out',
+        opacity: 0,
+        scale:0
+      })
+      gsap.from("#icon1",{
+        rotate: -360,
+        duration: 2,
+        ease:'power3.out',
+        opacity: 0,
+        scale:0
+      })
   }, []);
 
   return (
@@ -57,6 +89,7 @@ function Hero() {
       className="relative flex flex-col items-center justify-center min-h-screen px-6 md:px-12 z-8
        text-gray-900 overflow-hidden"
     >
+      <div id='cursor' className='absolute left-0 top-0 w-[15px] h-[15px] rounded-full bg-black z-9'/>
       {/* 背景渐变光效 */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.25),transparent_60%)] pointer-events-none" />
 
