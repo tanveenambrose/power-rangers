@@ -1,8 +1,9 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { gsap } from 'gsap';
 
 function Svg() {
+useEffect(() => {
     var path = "M 10 250 Q 500 250 990 250";
   var finalPath = "M 10 250 Q 500 250 990 250";
 
@@ -25,6 +26,7 @@ function Svg() {
       ease: 'elastic.out(1, 0.3)'
   });
 });
+}, []);
 
   return (
     <div  className=''>

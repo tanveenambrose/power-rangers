@@ -4,21 +4,23 @@ import Hero from '@/components/Hero'
 import Navbar from '@/components/Navbar'
 import gsap from 'gsap'
 import { ScrollTrigger, SplitText } from 'gsap/all'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 gsap.registerPlugin(ScrollTrigger, SplitText) //register global plugins
 
 function App() {
-  var main = document.getElementById("main");
-  var cursor = document.getElementById("cursor");
+  useEffect(() => {
+    var main = document.getElementById("main");
+    var cursor = document.getElementById("cursor");
 
-  main?.addEventListener('mousemove', function(dets) {
-    gsap.to(cursor, {
-      x: dets.x,
-      y: dets.y,
-      ease: 'power3.out'
-    })
-  });
+    main?.addEventListener('mousemove', function(dets) {
+      gsap.to(cursor, {
+        x: dets.x,
+        y: dets.y,
+        ease: 'power3.out'
+      })
+    });
+  }, []);
 
   
 
