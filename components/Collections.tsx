@@ -31,7 +31,7 @@ function Collections() {
       { yPercent: 100, opacity: 0 },
       { yPercent: 0, opacity: 1, ease: "power1.inOut", delay: 0.8 }
     );
-    gsap.to("#icon3", {y: 400, x: -400, rotation: 180, scale:2,duration:2, delay:2, scrollTrigger: { trigger: "#collections", start: "30% bottom", end: "90% bottom ", scrub: 2, markers: true }});
+    gsap.to("#icon3", {y: 400, x: -400, rotation: 180, scale:2,duration:2, delay:2, scrollTrigger: { trigger: "#collections", start: "30% bottom", end: "90% bottom ", scrub: 2 }});
   }, [currentId]);
 
   return (
