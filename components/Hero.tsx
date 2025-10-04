@@ -81,6 +81,13 @@ function Hero() {
         opacity: 0,
         scale:0
       })
+
+      gsap.from("#mainImage",{
+        opacity: 0,
+        scale:0.5,
+        duration: 2,
+        ease:'power3.out',
+      })
   }, []);
 
   return (
@@ -94,6 +101,7 @@ function Hero() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.25),transparent_60%)] pointer-events-none" />
 
       <img
+        id="mainImage"
         src="PowerRangers.jpeg"
         alt="PowerRangers"
         className="mx-auto mb-10 w-[400px] md:w-[500px] rounded-2xl shadow-xl object-cover"

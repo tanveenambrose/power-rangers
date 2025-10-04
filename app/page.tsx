@@ -1,5 +1,6 @@
 'use client'
 
+import Collections from '@/components/Collections'
 import Hero from '@/components/Hero'
 import Navbar from '@/components/Navbar'
 import Slider from '@/components/Slider'
@@ -16,6 +17,7 @@ function App() {
       <Navbar />
       <Hero/>
       <Slider/>
+      <Collections/>
     </main>
   )
 }

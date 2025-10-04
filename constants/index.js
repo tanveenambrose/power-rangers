@@ -14,43 +14,48 @@ const socials = [
 const allRengers = [
   {
     id: 1,
-    name: "Classic Tote",
-    title: "Elegant Everyday Tote",
+    name: "Red Ranger",
+    title: "Captain Marvelous",
     description:
-      "A timeless tote bag crafted with premium leather. Perfect for work, shopping, and casual outings.",
+      "Role: Team Leader, Captain of the Gokaigers Weapon: Gokai Saber & Gokai Gun (dual-wield) Powers:Super agility, combat skill, fearless leadership. Can transform into past Red Rangers using Ranger Keys. Finishing attack: Final Wave Slash with his saber. Personality: Bold, daring, values freedom.",
     image: "Red.jpeg",
+    color: "red",
   },
   {
     id: 2,
-    name: "Evening Clutch",
-    title: "Chic Evening Clutch",
+    name: "Blue Ranger",
+    title: "Joe Gibken",
     description:
-      "Sleek and compact design with a metallic clasp. Adds sophistication to your evening wear.",
+      "Role: The swordsman of the team Weapon: Dual Gokai Sabers (expert fencer) Powers: Master swordsman, unmatched in close combat. Uses Blue Ranger Keys to transform into past Blue Rangers. Very skilled in defensive maneuvers. Personality: Calm, disciplined, loyal to Marvelous.",
     image: "Blue.jpeg",
+    color: "blue-600",
   },
   {
     id: 3,
-    name: "Crossbody Bag",
+    name: "Pink Ranger",
     title: "Casual Crossbody",
     description:
       "Lightweight and versatile crossbody bag with adjustable straps. Ideal for hands-free comfort.",
     image: "Pink.jpeg",
+    color: "pink-600",
   },
   {
     id: 4,
-    name: "Mini Backpack",
-    title: "Trendy Mini Backpack",
+    name: "Yellow Ranger",
+    title: "Ahim de Famille",
     description:
-      "A stylish mini backpack made with soft vegan leather. Great for daily essentials.",
+      "Role: The graceful and noble warrior (Princess turned Pirate) Weapon: Gokai Gun (marksman) Powers: Expert in ranged combat. Uses Pink Ranger Keys to transform into past Pink Rangers. Strong willpower, often underestimated because of her elegance. Personality: Kind-hearted, gentle, but incredibly strong-willed.",
     image: "Yellow.jpeg",
+    color: "yellow-600",
   },
   {
     id: 5,
-    name: "Shoulder Bag",
-    title: "Modern Shoulder Bag",
+    name: "Green Ranger",
+    title: "Don Dogoier aka “Doc” ",
     description:
-      "Curved silhouette with gold-tone hardware. A modern twist on the classic shoulder bag.",
+      "Role: The engineer & mechanic of the team Weapon: Gokai Gun (blaster-style) Powers: Tech genius – maintains the Gokai Galleon (their ship). Uses Green Ranger Keys to transform into past Green Rangers.Not the strongest fighter, but incredibly creative and supportive. Personality: Comic relief, clumsy but very intelligent and caring.",
     image: "Green.jpeg",
+    color: "green-600",
   },
 ];
 

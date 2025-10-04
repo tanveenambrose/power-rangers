@@ -1,2 +1,1 @@
-- [x] Edit Navbar.tsx: Remove invalid audio import, update src to string path, fix img src to absolute
-- [ ] Edit globals.css: Add CSS for .indicator-line class with animation
+- [x] Update components/Collections.tsx to fix dynamic Tailwind class name for text color by creating a mapping from color values to full Tailwind class names
