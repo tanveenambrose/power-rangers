@@ -87,7 +87,7 @@ function Hero() {
     <section
       id="hero"
       className="relative flex flex-col items-center justify-center min-h-screen px-6 md:px-12 z-8
-       text-gray-900 overflow-hidden"
+       text-gray-900 bg-gradient-to-r from-[#ffbdfb] via-[#c5fcdd] to-[#e4ecc6] overflow-hidden"
     >
       <div id='cursor' className='absolute left-0 top-0 w-[15px] h-[15px] rounded-full bg-black z-9'/>
       {/* 背景渐变光效 */}

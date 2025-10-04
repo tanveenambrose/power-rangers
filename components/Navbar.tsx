@@ -58,6 +58,7 @@ function Navbar() {
               </a>
             </li>
           ))}
+          
           <button type="button" className='ml-10 flex items-center space-x-0.5' onClick={toggleAudioIndicator}>
                         {[1,2,3,4].map((bar)=>(
                             <div key={bar}
@@ -67,11 +68,12 @@ function Navbar() {
                         <audio
                     ref={audioElementRef}
                     className='hidden'
-                    src="/audio/PowerRangersTheme.mp3"
+                    src="/audio/PowerRangersSPD.mp3"
                     loop
                     preload="auto"
                 />
-                </button>
+          </button>
+          
         </ul>
       </div>
 
