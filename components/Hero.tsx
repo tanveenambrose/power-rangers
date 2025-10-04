@@ -54,7 +54,7 @@ function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex flex-col items-center justify-center min-h-screen px-6 md:px-12 
+      className="relative flex flex-col items-center justify-center min-h-screen px-6 md:px-12 z-8
        text-gray-900 overflow-hidden"
     >
       {/* 背景渐变光效 */}
