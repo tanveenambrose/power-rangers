@@ -33,7 +33,7 @@ const allRengers = [
   {
     id: 3,
     name: "Pink Ranger",
-    title: "Casual Crossbody",
+    title: "Ahim de Famille",
     description:
       "Lightweight and versatile crossbody bag with adjustable straps. Ideal for hands-free comfort.",
     image: "Pink.jpeg",
@@ -42,7 +42,7 @@ const allRengers = [
   {
     id: 4,
     name: "Yellow Ranger",
-    title: "Ahim de Famille",
+    title: "Luka Millfy",
     description:
       "Role: The graceful and noble warrior (Princess turned Pirate) Weapon: Gokai Gun (marksman) Powers: Expert in ranged combat. Uses Pink Ranger Keys to transform into past Pink Rangers. Strong willpower, often underestimated because of her elegance. Personality: Kind-hearted, gentle, but incredibly strong-willed.",
     image: "Yellow.jpeg",

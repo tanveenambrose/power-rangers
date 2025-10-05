@@ -20,11 +20,11 @@ function Collections() {
       { opacity: 0, xPercent: -100 },
       { opacity: 1, xPercent: 0, duration: 1, ease: "power1.inOut" }
     );
-    gsap.fromTo(".name", { opacity: 0 }, { opacity: 1, duration: 1 });
+    gsap.fromTo(".name", { opacity: 0 }, { opacity: 1, duration: 1, ease: "power1.inOut", delay: 0.3 });
     gsap.fromTo(
       ".title",
       { yPercent: 100, opacity: 0 },
-      { yPercent: 0, opacity: 1, ease: "power1.inOut", delay: 0.5 }
+      { yPercent: 0, opacity: 1, ease: "power2.inOut", delay: 0.5 }
     );
     gsap.fromTo(
       ".description",
