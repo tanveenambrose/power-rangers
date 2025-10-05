@@ -1,6 +1,6 @@
 const navLinks = [
   { id: "collections", title: "Collections" },
-  { id: "all-rangers", title: "All Rangers" },
+  { id: "allrangers", title: "All Rangers" },
   { id: "features", title: "Features" },
   { id: "about", title: "About Us" },
   { id: "contact", title: "Contact" },
