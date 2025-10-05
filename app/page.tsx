@@ -1,5 +1,6 @@
 'use client'
 
+import AllRangers from '@/components/AllRangers'
 import Collections from '@/components/Collections'
 import Hero from '@/components/Hero'
 import Navbar from '@/components/Navbar'
@@ -18,6 +19,7 @@ function App() {
       <Hero/>
       <Slider/>
       <Collections/>
+      <AllRangers/>
     </main>
   )
 }
