@@ -14,7 +14,7 @@ function Slider() {
                 scroller: 'body',
                 start: 'top 10%',
                 end: 'top -120%',
-                scrub: 1.5,
+                scrub: true,
                 pin: true,                
             }
         });
