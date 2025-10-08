@@ -13,7 +13,7 @@ function Slider() {
                 trigger: '#page1',
                 scroller: 'body',
                 start: 'top 10%',
-                end: 'top -120%',
+                end: 'top -120%', 
                 scrub: true,
                 pin: true,                
             }
