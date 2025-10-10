@@ -12,26 +12,40 @@ interface FlipState {
     [key: string]: boolean;
 }
 
+// Utility type for managing the single expanded card state
+interface ExpandedState {
+    id: string | null;
+    originalZIndex: string;
+}
+
 function SamuraiRangers() {
     const isMobile = useMediaQuery({ maxWidth: 767 });
     const containerRef = useRef<HTMLDivElement>(null); 
     const flipStateRef = useRef<FlipState>({}); 
+    // New ref to manage the expanded card state
+    const expandedRef = useRef<ExpandedState>({ id: null, originalZIndex: 'auto' }); 
 
-    // 🔄 FLIP & BLUR EFFECT Logic for ALL images
+    // 🔄 FLIP, BLUR, and CLICK EFFECT Logic for ALL images
     useEffect(() => {
-        const flipperContainers = containerRef.current?.querySelectorAll(".flip-card-container");
-        if (!flipperContainers) return;
+        // Select ALL flipper containers, including the red one.
+        const allCardElements = containerRef.current?.querySelectorAll(".flip-card-container");
+        if (!allCardElements) return;
 
         // Initialize flip state for all flippers
-        flipperContainers.forEach((container) => {
+        allCardElements.forEach((container) => {
             const flipper = container.querySelector(".flipper");
             if (flipper) {
                  flipStateRef.current[flipper.id] = false;
             }
         });
 
-        // Function to handle the flip animation and blur/focus
+        // Function to handle the flip animation and blur/focus (on HOVER)
         const handleHover = (e: Event) => {
+            // 🛑 CRITICAL: If any card is expanded, disable all hover effects.
+            if (expandedRef.current.id !== null) {
+                return;
+            }
+            
             const targetContainer = e.currentTarget as HTMLDivElement;
             const flipper = targetContainer.querySelector(".flipper") as HTMLDivElement;
             if (!flipper) return;
@@ -41,29 +55,29 @@ function SamuraiRangers() {
 
             // 1. BLUR/FOCUS LOGIC
             if (e.type === "mouseenter") {
-                // Blur/Dim ALL
-                gsap.to(flipperContainers, {
+                // Blur/Dim ALL containers
+                gsap.to(allCardElements, {
                     filter: "blur(5px) brightness(0.7)",
-                    duration: 0.3,
+                    duration: 0.1,
                     ease: "power2.out",
                 });
-                // Focus Current
+                // Focus Current container
                 gsap.to(targetContainer, {
                     filter: "blur(0px) brightness(1)",
-                    duration: 0.3,
+                    duration: 0.1,
                     ease: "power2.out",
                 });
             } else { // mouseleave
-                // Remove Blur/Dim from ALL
-                gsap.to(flipperContainers, {
+                // Remove Blur/Dim from ALL containers
+                gsap.to(allCardElements, {
                     filter: "blur(0px) brightness(1)",
-                    duration: 0.3,
+                    duration: 0.1,
                     ease: "power2.out",
                 });
             }
 
 
-            // 2. FLIP LOGIC (Only runs if the event is mouseenter/mouseleave)
+            // 2. FLIP LOGIC
             let rotation: number | undefined = undefined;
 
             if (e.type === "mouseenter") {
@@ -80,24 +94,87 @@ function SamuraiRangers() {
             
             if (rotation !== undefined) {
                  gsap.to(flipper, {
-                    duration: 0.2,
+                    duration: 0.3,
                     rotateY: rotation,
                     ease: "power2.inOut",
                 });
             }
         };
 
+        // Function to handle the EXPAND/COLLAPSE (on CLICK)
+        const handleClick = (e: Event) => {
+            const targetContainer = e.currentTarget as HTMLDivElement;
+            const flipper = targetContainer.querySelector(".flipper") as HTMLDivElement;
+            if (!flipper) return;
+
+            const id = flipper.id;
+            const isExpanded = expandedRef.current.id === id;
+            
+            // --- Collapse Logic (Clicking the expanded card) ---
+            if (isExpanded) {
+                gsap.to(targetContainer, {
+                    scale: 1,
+                    zIndex: expandedRef.current.originalZIndex, // Restore original z-index
+                    duration: 0.2,
+                    ease: "power2.inOut",
+                    onComplete: () => {
+                        // Re-enable hover effects globally
+                        expandedRef.current = { id: null, originalZIndex: 'auto' };
+                        // Ensure all elements are back to normal filter
+                        gsap.to(allCardElements, { filter: "blur(0px) brightness(1)", duration: 0.2 });
+                    }
+                });
+                return;
+            }
+
+            // --- Expand Logic (Clicking a non-expanded card) ---
+            
+            // If another card is already expanded, do nothing
+            if (expandedRef.current.id !== null) return;
+
+
+            // Store original z-index and set the new expanded state
+            expandedRef.current.originalZIndex = targetContainer.style.zIndex || 'auto'; 
+            expandedRef.current.id = id;
+
+            // Animate expansion
+            gsap.to(targetContainer, {
+                scale: 1.5,
+                zIndex: 999, // Bring to front
+                duration: 0.2,
+                ease: "power2.inOut",
+            });
+
+            // Ensure non-expanded elements are blurred/dimmed upon expansion
+            gsap.to(Array.from(allCardElements).filter(el => el !== targetContainer), {
+                filter: "blur(5px) brightness(0.7)",
+                duration: 0.1,
+                ease: "power2.out",
+            });
+            // Ensure expanded element is focused
+             gsap.to(targetContainer, {
+                filter: "blur(0px) brightness(1)",
+                duration: 0.3,
+                ease: "power2.out",
+            });
+        };
+
+
         // Attach listeners to all flipper containers
-        flipperContainers.forEach((container) => {
+        allCardElements.forEach((container) => {
+            // Remove the blanket 'absolute' style application here.
+            
             container.addEventListener("mouseenter", handleHover);
             container.addEventListener("mouseleave", handleHover);
+            container.addEventListener("click", handleClick);
         });
 
         // Cleanup
         return () => {
-            flipperContainers.forEach((container) => {
+            allCardElements.forEach((container) => {
                 container.removeEventListener("mouseenter", handleHover);
                 container.removeEventListener("mouseleave", handleHover);
+                container.removeEventListener("click", handleClick);
             });
         };
     }, []);
@@ -124,8 +201,8 @@ function SamuraiRangers() {
         // Ranger image animations
         maskTimeline.to(".ranger1", { x: 400, y: 70, scale: 3, duration: 2, opacity: 1, ease: "power1.inOut" });
         maskTimeline.to(".ranger3", { x: -400, y: 70, scale: 3, duration: 2, opacity: 1, ease: "power1.inOut" });
-        maskTimeline.to(".ranger2", { x: 120, y: -310, scale: 2.7, duration: 2, opacity: 1, ease: "power1.inOut" });
-        maskTimeline.to(".ranger4", { x: -120, y: -310, scale: 2.7, duration: 2, opacity: 1, ease: "power1.inOut" });
+        maskTimeline.to(".ranger2", { x: 120, y: -60, scale: 2.7, duration: 2, opacity: 1, ease: "power1.inOut" });
+        maskTimeline.to(".ranger4", { x: -120, y: -60, scale: 2.7, duration: 2, opacity: 1, ease: "power1.inOut" });
     }, [isMobile]);
 
     // --- RENDER FUNCTION UTILITY ---
@@ -138,8 +215,10 @@ function SamuraiRangers() {
     };
 
     const renderRangerFlipCard = (id: string, src: string, alt: string, classes: string, frontClasses: string = 'w-64 h-64') => (
+        // IMPORTANT: Removed position: 'absolute' from style prop. The parent wrapper (.rangerX) or the containerRef flow handles position.
         <div 
             className={`flip-card-container relative ${frontClasses} [perspective:1000px] cursor-pointer`}
+            style={{ zIndex: 10 }} // Only keep zIndex for initial stacking.
         >
             <div
                 id={id}
@@ -155,7 +234,7 @@ function SamuraiRangers() {
                 </div>
 
                 {/* BACK FACE */}
-                <div className="back-face absolute w-full h-full bg-indigo-600 flex items-center justify-center rounded-2xl shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)] text-2xl font-bold text-white ">
+                <div className="back-face absolute w-full h-full bg-indigo-600 flex items-center justify-center rounded-xl shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)] text-2xl font-bold text-white ">
                     <img
                         src={backImages[id.split('-')[0]] || '/SamuraiMegazord.jpg'}
                         alt={`${alt} Zord`}
@@ -176,23 +255,25 @@ function SamuraiRangers() {
                 </h2>
 
                 <div className="flex flex-col md:flex-row justify-center items-center">
-                    {/* 🔹 Container for ALL RANGERS */}
+                    {/* 🔹 Container for ALL RANGERS - This is the relative positioning context */}
                     <div
                         ref={containerRef}
                         className="relative flex justify-center items-center w-full "
                     >
-                        {/* 🔴 RED RANGER FLIPPER (Center Image) - SIZE FIXED HERE */}
-                        {renderRangerFlipCard(
-                            "red-ranger-flipper",
-                            "/SamuraiRed.jpeg",
-                            "SamuraiRed",
-                            "masked-img",
-                            // This class set restores the original dimensions
-                            "w-50 h-50 max-w-[300px] sm:max-w-sm" 
-                        )}
-
-                        {/* 🟦 BLUE RANGER FLIPPER */}
-                        <div className="absolute ranger1 opacity-0 top-0 left-0">
+                        {/* 🔴 RED RANGER FLIPPER (Center Image) - RELATIVE POSITIONING */}
+                        {/* It's positioned normally in the flow, so its wrapper needs to be adjusted. */}
+                        <div className="relative">
+                            {renderRangerFlipCard(
+                                "red-ranger-flipper",
+                                "/SamuraiRed.jpeg",
+                                "SamuraiRed",
+                                "masked-img",
+                                "w-50 h-50 max-w-[300px] sm:max-w-sm"
+                            )}
+                        </div>
+                        
+                        {/* 🟦 BLUE RANGER FLIPPER - ABSOLUTE POSITIONING (Controlled by GSAP/ScrollTrigger) */}
+                        <div className="absolute ranger1 opacity-0 top-0 left-0 z-10">
                             {renderRangerFlipCard(
                                 "blue-ranger-flipper",
                                 "/SamuraiBlue.jpg",
@@ -203,7 +284,7 @@ function SamuraiRangers() {
                         </div>
 
                         {/* 🟩 GREEN RANGER FLIPPER */}
-                        <div className="absolute ranger3 opacity-0 top-0 right-0">
+                        <div className="absolute ranger3 opacity-0 top-0 right-0 z-10">
                             {renderRangerFlipCard(
                                 "green-ranger-flipper",
                                 "/SamuraiGreen.jpg",
@@ -214,7 +295,7 @@ function SamuraiRangers() {
                         </div>
 
                         {/* 🟨 YELLOW RANGER FLIPPER */}
-                        <div className="absolute ranger2 opacity-0 top-100 left-0">
+                        <div className="absolute ranger2 opacity-0 bottom-0 left-0 z-10">
                             {renderRangerFlipCard(
                                 "yellow-ranger-flipper",
                                 "/SamuraiYellow.jpg",
@@ -225,7 +306,7 @@ function SamuraiRangers() {
                         </div>
 
                         {/* 🌸 PINK RANGER FLIPPER */}
-                        <div className="absolute ranger4 opacity-0 top-100 right-0">
+                        <div className="absolute ranger4 opacity-0 bottom-0 right-0 z-10">
                             {renderRangerFlipCard(
                                 "pink-ranger-flipper",
                                 "/SamuraiPink.jpg",
