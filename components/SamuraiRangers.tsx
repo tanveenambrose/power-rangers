@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { useMediaQuery } from "react-responsive";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger"; 
+import Svg from "./Svg";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -333,6 +334,7 @@ function SamuraiRangers() {
                         </p>
                     </div>
                 </div>
+                <div className="flex justify-center items-center"><Svg /></div>
             </div>
         </section>
     );
