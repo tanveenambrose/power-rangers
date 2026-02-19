@@ -7,3 +7,4 @@ doing it all well to done ..
 sorry for not working 
 SORRY MAN AGAIN 
 i have skipped again ..
+ok i did nothing today ..
